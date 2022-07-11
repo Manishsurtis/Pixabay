@@ -10,27 +10,24 @@ import XCTest
 
 class PixabayTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var vc : SearchPictureViewController!
+    func test_buttonSearchTap(){
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let sut : SearchPictureViewController = sb.instantiateViewController(withIdentifier: String(describing: "SearchPictureVC")) as! SearchPictureViewController
+        sut.loadViewIfNeeded()
+        sut.btnSearch.sendActions(for: .touchUpInside)
     }
-
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        vc = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_ListApi_Getdata(){
+        let PictureListVC : PictureViewController = PictureViewController()
+        PictureListVC.getSearchKey = "flowers"
+        guard  PictureListVC.getSearchKey.count > 0 else{
+            XCTFail("Please enter search keyword")
+            return
         }
+        PictureListVC.get_Picture_List_APICall()
     }
-
 }
